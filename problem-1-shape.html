@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Problem 1 - shapes</title>
+  <style>
+    body{
+      margin: 0;
+    }
+    #div-head{
+      border: gray 2px solid;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div id="div-head">
+    <h2>
+      Shapes using Javascript Canvas
+    </h2>
+  </div>
+  <div id="div-main">
+    <div id="div-1">
+      <canvas id="canvas-1" style="height: 100px; width: 200px;"></canvas>
+    </div>
+    <div id="div-2">
+      <canvas id="canvas-2" style="height: 100px; width: 200px;"></canvas>
+    </div>
+  </div>
+</body>
+<script>
+  const screenHeightTotal = document.documentElement.clientHeight;
+  const body = document.documentElement.querySelector("body");
+  body.style.height = `${screenHeightTotal - 20}px`;
+  body.style.border = "10px solid grey";
+
+  let divHead = document.getElementById("div-head");
+
+  const bodyHeightNoBorder = document.querySelector("body").clientHeight;
+  const divMain = document.getElementById("div-main");
+  divMain.style.border = "cadetblue 2px solid";
+  divMain.style.height = `${bodyHeightNoBorder - divHead.offsetHeight - 4}px`;
+
+  const div1 = document.querySelector("#div-1");
+  const div2 = document.querySelector("#div-2");
+
+  const divsHeight = (divMain.clientHeight / 5) - 2;
+  div1.style.height = `${divsHeight}px`;
+  div1.style.border = "1px solid lightblue";
+
+  div2.style.height = `${divsHeight}px`;
+  div2.style.border = "1px solid lightblue";
+
+  let trapeze = document.querySelector("#canvas-1").getContext("2d");
+  trapeze.fillStyle = "white";
+  trapeze.beginPath();
+  trapeze.lineWidth = 5;
+  trapeze.strokeStyle = "gray";
+  trapeze.moveTo(100, 25);
+  trapeze.lineTo(200, 25);
+  trapeze.lineTo(225, 125);
+  trapeze.lineTo(75, 125);
+  trapeze.lineTo(102, 25);
+  trapeze.stroke();
+  trapeze.fill();
+
+
+  const canvas = document.getElementById("canvas-2");
+  const diamond = canvas.getContext("2d");
+  diamond.fillStyle='red';
+  const deg = Math.PI/180;
+  diamond.translate((canvas.width/2), (canvas.height/2));
+  diamond.rotate(45 * deg);
+  diamond.fillRect(-50, -50, 100, 100);
+  diamond.strokeRect(-50, -50, 100, 100);
+
+
+</script>
+</html>
