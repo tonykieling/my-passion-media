@@ -44,12 +44,12 @@ try {
 
 // calls the route regarding contact, which allows add or get contacts
 app.use("/product", productsRoutes);
-app.use("*", (req, res) => res.json({error: "no route has been found"}));
 
 // // it deliveres front-end files to the client/browser
 // app.get('*', (req, res) => {
-//   return res.sendFile(path.join(__dirname, './public', 'index.html'))
-// });
-
+  //   return res.sendFile(path.join(__dirname, './public', 'index.html'))
+  // });
+  
+app.use("*", (req, res) => res.json({error: "no route has been found"}));
 
 app.listen(PORT, () => console.log(`Server is running at ${PORT}`));

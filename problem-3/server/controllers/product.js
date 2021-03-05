@@ -6,7 +6,7 @@ const Product   = require("../models/product.js");
  * the functions below are available for the front-end: 
  *    - record a new product
  *    - get product's list
- * 
+ *    - delete a specific product
 */
 
 // function to get products
@@ -28,6 +28,8 @@ const getProducts = async(req, res) => {
     return res.status(400).json({ error: "something bad when getting data. :/"});
   }
 };
+
+
 
 
 // function to add a new product
@@ -75,6 +77,8 @@ const addProducts = async(req, res) => {
     return res.status(400).json({ error: "something bad when recording. :/"});
   }
 };
+
+
 
 
 // function to remove a particular product

@@ -13,7 +13,5 @@ router.post("/", productsController.addProducts);
 // // this route calls the controller for removing product
 router.delete("/", productsController.removeProduct);
 
-// // this route calls the controller for editing products
-// router.post("/", productsController.editProducts);
 
 module.exports = router;

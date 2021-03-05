@@ -1,0 +1,5 @@
+/* gray background color to the body component */
+.main {
+  background-color: lightseagreen;
+  overflow: hidden;
+}
