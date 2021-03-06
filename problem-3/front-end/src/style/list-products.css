@@ -1,5 +1,59 @@
-/* gray background color to the body component */
-.main {
-  background-color: lightseagreen;
-  overflow: hidden;
+.num-head {
+  width: 2rem;
+}
+
+.name-head {
+  width: 15rem;
+}
+
+.others-head {
+  width: 5rem;
+}
+
+table {
+  border: 1px solid grey;
+  border-collapse: collapse;
+}
+
+th {
+  border: 1px solid grey;
+  border-collapse: collapse;
+}
+
+td {
+  border: 1px solid grey;
+  border-collapse: collapse;
+}
+
+.set-center {
+  text-align: center;
+}
+
+.set-left {
+  padding-left: 0.5rem;
+}
+
+.icons {
+  text-align: center;
+  width: 3rem;
+}
+
+tr:nth-child(even){background-color: lightgreen;}
+
+tr:nth-child(odd){background-color: lightgoldenrodyellow;}
+
+tr:hover {background-color: salmon;}
+
+#color-head th {
+  background-color: lightskyblue;
+}
+
+.message {
+  width: 100%;  
+  /* border: 1px solid red; */
+  height: 2rem;
+  text-align: center;
+  color: red;
+  vertical-align: middle;
+  font-weight: bolder;
 }

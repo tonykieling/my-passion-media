@@ -6,9 +6,6 @@ const bodyParser  = require("body-parser");
 const mongoose    = require("mongoose");
 require('dotenv').config();
 
-// settings for local/dev environment
-// const cors = require('cors'); // when running in diff servers, dev env
-// app.use(cors());
 
 const productsRoutes = require("./server/routes/product.js");
 

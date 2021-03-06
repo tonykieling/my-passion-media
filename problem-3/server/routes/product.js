@@ -10,6 +10,7 @@ router.get("/", productsController.getProducts);
 // this route calls the controller for adding products
 router.post("/", productsController.addProducts);
 
+
 // // this route calls the controller for removing product
 router.delete("/", productsController.removeProduct);
 

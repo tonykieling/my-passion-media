@@ -8,25 +8,17 @@ const productSchema = mongoose.Schema({
     type    : String,
     required: true
   },
-
   weight: {
-    type    : Number,
-    // required: true
+    type    : Number
   },
-
-  dimensions: {
-    height: {
-      type    : Number,
-      // required: true
-    }, 
-    width: {
-      type    : Number,
-      // required: true
-    },
-    depth: {
-      type    : Number,
-      // required: true
-    }
+  height: {
+    type    : Number
+  }, 
+  width: {
+    type    : Number
+  },
+  depth: {
+    type    : Number
   }
   
 });

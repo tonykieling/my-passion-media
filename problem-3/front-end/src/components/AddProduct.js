@@ -5,11 +5,9 @@ import axios from "axios";
 const initialState = {
   name: "",
   weight: "",
-  dimensions: {
-    height: "",
-    width: "",
-    depth: ""
-  }
+  height: "",
+  width: "",
+  depth: ""
 };
 
 const butonLabel = "Save Product";
@@ -18,6 +16,7 @@ const originalButonColorClass = "bt-style-green";
 const AddProduct = () => {
   const [product, setState] = useState(initialState);
   const refName   = useRef(null);
+
 
   const handleChangeData = event => {
     const { name, value } = event.target;
@@ -31,6 +30,7 @@ const AddProduct = () => {
     setBtColor(originalButonColorClass);
   };
 
+
   // disable form controller
   const [disableFormController, setDisableForm] = useState(false);
 
@@ -42,18 +42,20 @@ const AddProduct = () => {
   const [ btLabel, setBtLabel ] = useState(butonLabel);
   const [ btColor, setBtColor ] = useState(originalButonColorClass);
 
+
   const saveProduct = async(event) => {
     event.preventDefault();
     console.log("tetttt", product)
 
-    if (!name) {
+    if (!product.name) {
       setBtLabel("Please, fill name");
       setBtColor("bt-style-yellow");
+      refName.current.focus();
     } else {
-
+      disableFormFunction(true);
       const url = "/product";
-      const data = { name, weight };
-      
+      const data = product;
+
       try {
         const record = await axios.post( 
           url,
@@ -63,21 +65,27 @@ const AddProduct = () => {
               "Content-Type": "application/json"
             }
         });
-
-        disableFormFunction(true);
         
         if (record.data.message)
           setBtLabel(butonLabel);
-          //after receiving success from axios:
-          // change button, disable form and after a while defined in delayChangeButtonLabel, clear the form and focus in Name again
+        
         else setBtLabel("Try again, please");
         
         } catch (error) {
           console.log("### error post", error);
         }
 
+      setState(initialState);
+      setBtLabel("Product has been Added succesfully!");
+      setBtColor("bt-style-blue");
+
+      // set 2.5 seconds showing the message the product was added successfully
+      setTimeout(() => {
+        setBtLabel(butonLabel);
+        setBtColor(originalButonColorClass);
         disableFormFunction();
         refName.current.focus();
+      }, 2500);
     }
   }
 
@@ -95,7 +103,7 @@ const AddProduct = () => {
             className = "text-form" 
             type      = "text"
             name      = "name"
-            value     = { name }
+            value     = { product.name }
             onChange  = { handleChangeData }
             ref       = { refName }
             disabled  = { disableFormController }
@@ -107,12 +115,13 @@ const AddProduct = () => {
           <input 
             id          = "weight"
             className   = "text-form" 
-            type        = "text"
+            type        = "number"
             name        = "weight"
-            value       = { weight }
+            value       = { product.weight }
             onChange    = { handleChangeData}
             disabled    = { disableFormController }
           ></input>
+          <span className = "units">Kg</span>
         </div>
 
 
@@ -122,39 +131,42 @@ const AddProduct = () => {
           <span className = "dimensions-title"> Height </span>
           <input 
             id          = "height"
-            type        = "text"
+            type        = "number"
             className   = "dimensions-fields" 
             name        = "height"
-            value       = { height }
+            value       = { product.height }
             onChange    = { handleChangeData}
             disabled    = { disableFormController }>
           </input>
+          <span className = "units">cm</span>
         </div>
 
         <div className   = "dimensions" >
           <span className = "dimensions-title"> Width </span>
           <input 
             id          = "width"
-            type        = "text"
+            type        = "number"
             className   = "dimensions-fields" 
             name        = "width"
-            value       = { width }
+            value       = { product.width }
             onChange    = { handleChangeData}
             disabled    = { disableFormController }>
           </input>
+          <span className = "units">cm</span>
         </div>
 
         <div className = "dimensions">
           <span className   = "dimensions-title" > Depth </span>
           <input 
             id          = "depth"
-            type        = "text"
+            type        = "number"
             className   = "dimensions-fields" 
             name        = "depth"
-            value       = { depth }
+            value       = { product.depth }
             onChange    = { handleChangeData}
             disabled    = { disableFormController }>
           </input>
+          <span className = "units">cm</span>
         </div>
 
         <div style = {{textAlign: "center"}}>
@@ -162,7 +174,6 @@ const AddProduct = () => {
             type = "submit"
             className = { btColor }
             onClick = { saveProduct }
-            // style     = { btColor }
           > { btLabel }
           </button>
         </div>
