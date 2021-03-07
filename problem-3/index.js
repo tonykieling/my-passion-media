@@ -9,7 +9,7 @@ require('dotenv').config();
 
 const productsRoutes = require("./server/routes/product.js");
 
-// app.use(express.static('public'));
+app.use(express.static('public'));
 
 
 // settings related to boy-parser, which allows extended urlencoder and enables to receive json format
@@ -33,7 +33,7 @@ try {
     useNewUrlParser: true,
     useUnifiedTopology: true 
   });
-    console.log("connected")
+
 } catch (err) {
   console.log("### error on MongoDB connection");
   console.log(err.message);
@@ -42,11 +42,11 @@ try {
 // calls the route regarding contact, which allows add or get contacts
 app.use("/product", productsRoutes);
 
-// // it deliveres front-end files to the client/browser
-// app.get('*', (req, res) => {
-  //   return res.sendFile(path.join(__dirname, './public', 'index.html'))
-  // });
-  
-app.use("*", (req, res) => res.json({error: "no route has been found"}));
+
+// it deliveres front-end files to the client/browser
+app.get('*', (req, res) => {
+    return res.sendFile(path.join(__dirname, './public', 'index.html'))
+  });
+
 
 app.listen(PORT, () => console.log(`Server is running at ${PORT}`));

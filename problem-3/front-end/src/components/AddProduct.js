@@ -45,7 +45,6 @@ const AddProduct = () => {
 
   const saveProduct = async(event) => {
     event.preventDefault();
-    console.log("tetttt", product)
 
     if (!product.name) {
       setBtLabel("Please, fill name");

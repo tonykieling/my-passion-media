@@ -18,7 +18,6 @@ const customStyle = {
 
 const EditModal = props => {
   const [{ _id, name, weight, height, width, depth }, setState] = useState(props.product);
-  console.log("name", name, "height", height)
   const [message, setMessage] = useState("");
 
   const handleChangeData = event => {
@@ -32,8 +31,6 @@ const EditModal = props => {
 
 
   const saveNewData = async() => {
-    console.log("save new data");
-
     const data = {
       _id,
       name,
@@ -42,7 +39,6 @@ const EditModal = props => {
       width   : width || undefined,
       depth   : depth || undefined
     };
-    console.log("data to be sent", data)
 
     const url = "/product";
 

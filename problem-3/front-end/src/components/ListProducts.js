@@ -59,9 +59,6 @@ const AddProduct = () => {
 
 
   const updateProducts = (action = "update", incomingProduct) => {
-    // const newTable = products.filter(e => e._id !== productRemoved);
-    // return(newTable);
-    console.log("updatinggg....", incomingProduct);
     if (action === "remove")
       return (products.filter(e => e._id !== incomingProduct));
     else {
@@ -105,7 +102,6 @@ const AddProduct = () => {
 
 
   const editProduct = product => {
-    console.log("edit", product);
     setProductToEdit(product);
     setCallEditModal(true);
   }
@@ -138,7 +134,6 @@ const AddProduct = () => {
 
   const updateScreen = product => {
     const newProducts = updateProducts("update", product);
-    console.log("newProducts", newProducts);
     setProducts(newProducts);
   }
 
