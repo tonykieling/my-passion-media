@@ -50,11 +50,13 @@ const AddProduct = () => {
       setCallEditModal("");
       setProductToEdit("");
     };
+    //eslint-disable-next-line
   }, []);
 
 
   useEffect(() => {
-    products && setDataTable(renderDataTable(products));
+    products && products.length && setDataTable(renderDataTable(products));
+    //eslint-disable-next-line
   }, [products]);
 
 

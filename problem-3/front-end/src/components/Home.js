@@ -1,5 +1,6 @@
 import React from "react";
 import "../style/home.css";
+import { Link } from "react-router-dom";
 
 const Home = () => {
   return (
@@ -7,10 +8,12 @@ const Home = () => {
       <h1> Hello Mr. Dumpty</h1>
       <h2> Welcome and enjoy the system </h2>
       <h2>In the bar above you can reach and work on the folowing features:</h2>
-      <ul>
-        <li><h2><a href = "/addProduct">Add a new product</a></h2></li>
-        <li><h2><a href = "/listProducts">List, Edit and Delete a product</a></h2></li>
-      </ul>
+      <div className = "list-position">
+        <ul>
+          <Link to = "/addProduct"><h2>1. Add a new Products</h2></Link>
+          <Link to = "/addProduct"><h2>2. List, Edit and Delete a product</h2></Link>
+        </ul>
+      </div>
     </div>
   );
 };
