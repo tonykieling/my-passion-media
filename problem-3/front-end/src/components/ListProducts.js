@@ -1,11 +1,9 @@
-import React, { 
-  useState, 
-  useEffect } from "react";
-
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "../style/list-products.css";
 import { FaTrash } from "react-icons/fa";
 import { FaEdit } from "react-icons/fa";
+import EditModal from "./EditModal.js";
 
 
 const url = "/product";
@@ -18,6 +16,10 @@ const AddProduct = () => {
   const [dataTable, setDataTable] = useState("");
 
   const [message, setMessage] = useState("");
+
+  const [callEditModal, setCallEditModal] = useState(false);
+
+  const [productToEdit, setProductToEdit] = useState("");
 
 
   useEffect(() => {
@@ -41,31 +43,38 @@ const AddProduct = () => {
     }
 
     fetchData();
+    return () => {
+      setProducts({});
+      setDataTable({});
+      setMessage("");
+      setCallEditModal("");
+      setProductToEdit("");
+    };
   }, []);
 
 
   useEffect(() => {
-    console.log("product effect", products);
     products && setDataTable(renderDataTable(products));
   }, [products]);
 
 
-  const updateProducts = productRemoved => {
-    console.log("products before removeing", products)
-    const newTable = products.filter(e => e._id !== productRemoved);
-    console.log("newTable", newTable);
-    return(newTable);
+  const updateProducts = (action = "update", incomingProduct) => {
+    // const newTable = products.filter(e => e._id !== productRemoved);
+    // return(newTable);
+    console.log("updatinggg....", incomingProduct);
+    if (action === "remove")
+      return (products.filter(e => e._id !== incomingProduct));
+    else {
+      const tempArray = products.filter(e => e._id !== incomingProduct._id);
+      return [...tempArray, incomingProduct];
+    }
   }
 
 
   const deleteProduct = async(product) => {
-    console.log("product", product)
-    const wannaDelete = window.confirm(`Are you sure you want to delete ${product.name}?`);
+    const wannaDelete = window.confirm(`Are you sure you want to delete - ${product.name} - ?`);
     if (wannaDelete === true) {
-      console.log("delete confirmed")
-
       const data = { productId: product._id };
-      console.log("data", data)
       try {
         const deleteProduct = await axios.delete( 
           url,
@@ -75,14 +84,12 @@ const AddProduct = () => {
             },
             data
         });
-        console.log("deleteProduct", deleteProduct);
+
         if (deleteProduct.data.success) {
           setMessage(`Product "${product.name}" has been deleted successfully!`);
-          //////////////////////////////
-          // update the table
-          const newProducts = updateProducts(product._id);
-          setProducts(newProducts);
 
+          const newProducts = updateProducts("remove", product._id);
+          setProducts(newProducts);
         } else setMessage(deleteProduct.data.error);
 
         setTimeout(() => {
@@ -99,11 +106,12 @@ const AddProduct = () => {
 
   const editProduct = product => {
     console.log("edit", product);
+    setProductToEdit(product);
+    setCallEditModal(true);
   }
 
 
   const renderDataTable = products => {
-    console.log("rendering data", products);
     return products.map((product, index) => {
       const { _id, name, weight, height, width, depth } = product;
 
@@ -128,8 +136,25 @@ const AddProduct = () => {
   }
 
 
+  const updateScreen = product => {
+    const newProducts = updateProducts("update", product);
+    console.log("newProducts", newProducts);
+    setProducts(newProducts);
+  }
+
+
+
   return (
     <div className="main">
+      {callEditModal && 
+        <EditModal
+          openModal   = { callEditModal }
+          closeModal  = { () => setCallEditModal(false) }
+          product     = { productToEdit }
+          changeProduct = { (productChanged) => updateScreen(productChanged)}
+        />
+      }
+
       <h2 className = "main-title"> List Products page</h2>
 
       <div className = "message">
@@ -155,8 +180,6 @@ const AddProduct = () => {
           { ( dataTable && dataTable.length ) ? dataTable : noData}
         </tbody>
       </table>
-      { console.log("products", products)}
-      { console.log("datatable", dataTable)}
     </div>
   );
 };

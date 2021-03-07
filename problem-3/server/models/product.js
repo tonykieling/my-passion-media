@@ -9,16 +9,16 @@ const productSchema = mongoose.Schema({
     required: true
   },
   weight: {
-    type    : Number
+    type    : String
   },
   height: {
-    type    : Number
+    type    : String
   }, 
   width: {
-    type    : Number
+    type    : String
   },
   depth: {
-    type    : Number
+    type    : String
   }
   
 });

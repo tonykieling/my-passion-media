@@ -11,8 +11,11 @@ router.get("/", productsController.getProducts);
 router.post("/", productsController.addProducts);
 
 
-// // this route calls the controller for removing product
+// this route calls the controller for removing product
 router.delete("/", productsController.removeProduct);
 
+
+// this route calls the controller for updating product
+router.patch("/", productsController.updateProduct);
 
 module.exports = router;
