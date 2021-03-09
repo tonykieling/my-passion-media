@@ -122,11 +122,23 @@ const AddProduct = () => {
           <td className = "set-center" onClick = {() => editProduct(product)}>{ width}</td>
           <td className = "set-center" onClick = {() => editProduct(product)}>{ depth}</td>
 
-          <td className = "icons" onClick = {() => editProduct(product)}>
-            <FaEdit color = "green" />
+          <td 
+            className = "icons" 
+            onClick = {() => editProduct(product)}
+          >
+            <div className = "tooltip">
+              <span className = "tooltip-text">Edit product</span>
+              <FaEdit color = "green" />
+            </div>
           </td>
-          <td className = "icons" onClick = { () => deleteProduct(product)}>
-            <FaTrash color = "darkred" />
+          <td 
+            className   = "icons" 
+            onClick     = { () => deleteProduct(product)}
+          >
+            <div className = "tooltip">
+              <span className = "tooltip-text">Delete product</span>
+              <FaTrash color = "darkred" />
+            </div>
           </td>
         </tr>
       )
