@@ -39,7 +39,7 @@ const EditModal = props => {
       width   : width || undefined,
       depth   : depth || undefined
     };
-
+    
     const url = "/product";
 
     try {

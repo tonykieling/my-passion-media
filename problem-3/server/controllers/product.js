@@ -112,8 +112,8 @@ const removeProduct = async(req, res) => {
 
 // function to update a particular product
 const updateProduct = async(req, res) => {
-  console.log("### insed update product");
-console.log("req.body", req.body)
+  console.log("### inside update product");
+console.log("req.body", req.body);
   try {
     let { _id, name, weight, height, width, depth } = req.body;
   // console.log("req.body", typeof req.body.depth)
