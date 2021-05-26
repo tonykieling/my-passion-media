@@ -1,6 +1,6 @@
 const express     = require("express");
 const PORT        = process.env.PORT || 3333;
-// const path        = require('path');
+const path        = require('path');
 const app         = express();
 const bodyParser  = require("body-parser");
 const mongoose    = require("mongoose");
@@ -8,11 +8,49 @@ require('dotenv').config();
 
 const productsRoutes = require("./server/routes/product.js");
 
+
+const cors = require('cors');
+app.use(cors());
+
+
+// settings related to CORS
+// it allows other clients (other than the SPA provided for this app) access these APIs
 app.use((req, res, next) => {
-  // const logHandling = require("./api/helpers/log_handling.js");
-  console.log(req.header('x-forwarded-for'), " - ", req.connection.remoteAddress, " - ", req.ip, " - ", req.connection.remoteAddress);
-  console.log("req.body===", req.body);
+  // console.log(" checking headers")  
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header(
+      "Access-Control-Allow-Headers",
+      "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+    );
+    if (req.method === "OPTIONS") {
+  // console.log(" logging OPTIONS");
+      res.header("Access-Control-Allow-Methods", "PUT, POST, PATCH, DELETE, GET");
+      return res.status(200).json({});
+    }
+    next();
+  });
+
+// settings related to boy-parser, which allows extended urlencoder and enables to receive json format
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+
+app.use((req, res, next) => {
+  // console.log(res.header('x-forwarded-for'), " - ", req.connection.remoteAddress, " - ", req.ip, " - ", req.connection.remoteAddress);
+  console.log(res.header('x-forwarded-for'));
+  console.log("req.body===>", req.body);
   next();
+
+  /**
+   * on FF it is working
+   * if I wann record info about an access I can
+   * DOubt: why does it get 7 times the, apparently, same info??
+   * but in chromium, it gest manifest.json instead of the much file
+   * trying to understand why...
+   * 
+   * SUMARY: not quite sure to implement in clockinJS yet because:
+   * 1- it has a not expected behaviour in Chromium
+   * 2- it gets 7 line of result instead of 1
+   */
 });
 
 app.use(express.static('./public'));
@@ -47,10 +85,6 @@ try {
   console.log(err.message);
 }
 
-// settings related to boy-parser, which allows extended urlencoder and enables to receive json format
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
-
 
 
 // calls the route regarding contact, which allows add or get contacts
@@ -58,11 +92,11 @@ app.use("/product", productsRoutes);
 
 
 // it deliveres front-end files to the client/browser
-// app.get("*", (req, res) => {
-// //     console.log("***************************** new request");
-//     return res.sendFile(path.join(__dirname, './public', 'index.html'));
-//     // return res.sendFile(path.join(__dirname, './public'));
-//   });
+app.get("*", (req, res) => {
+//     console.log("***************************** new request");
+    return res.sendFile(path.join(__dirname, './public', 'index.html'));
+    // return res.sendFile(path.join(__dirname, './public'));
+  });
 
 
 app.listen(PORT, () => console.log(`Server is running at ${PORT}`));
