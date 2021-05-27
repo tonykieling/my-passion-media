@@ -12,6 +12,19 @@ const productsRoutes = require("./server/routes/product.js");
 const cors = require('cors');
 app.use(cors());
 
+/**
+ * still analyzing the communication behaviour.
+ * using also Wireshark
+ * the route below was inserted to check how FF and Chromium handles it.
+ * FF doesnt get the second, as it would suffice by the line in express.static("public")
+ * Chromium executes the second, because, I think it doesnt execute the express.static expression
+ * why
+ */
+// FIRST
+app.get("*", (req, res, next) => {
+  console.log("IP=====>", req.ip);
+  next();
+});
 
 // settings related to CORS
 // it allows other clients (other than the SPA provided for this app) access these APIs
@@ -36,7 +49,7 @@ app.use(bodyParser.json());
 
 app.use((req, res, next) => {
   // console.log(res.header('x-forwarded-for'), " - ", req.connection.remoteAddress, " - ", req.ip, " - ", req.connection.remoteAddress);
-  console.log(res.header('x-forwarded-for'));
+  // console.log(res.header('x-forwarded-for'));
   console.log("req.body===>", req.body);
   next();
 
@@ -53,7 +66,7 @@ app.use((req, res, next) => {
    */
 });
 
-app.use(express.static('./public'));
+app.use(express.static("public"));
 
 // it seems to work fine, at least on FireFox - Chrome is not working, cleaned data and cookies, but nothing
 // const fn = express.static("./public");
@@ -85,6 +98,12 @@ try {
   console.log(err.message);
 }
 
+
+// SECOND
+// app.get("*", (req, res, next) => {
+//   console.log("IP=====>", req.ip);
+//   next();
+// });
 
 
 // calls the route regarding contact, which allows add or get contacts
